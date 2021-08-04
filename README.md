@@ -21,9 +21,7 @@ from Github.
 
 It's quite easy to install and run this recipe for [docker-compose](https://docs.docker.com/compose/install/), 
 all you have to do is create an entry in your hosts file, 
-do a GIT clone, 
-chown the files 
-then run the installation script. 
+do a GIT clone, run the installation script, then chown the files. 
 
 After that you can run OSSN with ```./start.sh``` and stop it with ```./stop.sh```.  
 
