@@ -19,9 +19,9 @@ from Github.
 
 ## How to Install and Run
 
-It's quite easy to install and run this recipe for [docker-compose](https://docs.docker.com/compose/install/), 
-all you have to do is create an entry in your hosts file, 
-do a GIT clone, run the installation script, then chown the files. 
+It's quite easy to install and run this recipe for [docker-compose](https://docs.docker.com/compose/install/). 
+
+All you have to do is GIT clone, run the installation script, and chown the files. 
 
 After that you can run OSSN with ```./start.sh``` and stop it with ```./stop.sh```.  
 
@@ -29,13 +29,19 @@ After that you can run OSSN with ```./start.sh``` and stop it with ```./stop.sh`
 
 ## TL;DR instructions (for Ubuntu/Linux)
 
-Optional: instead of http://localhost you can set it up as http://osn.loc
+### Optional prerequisite: 
 
-Only do this once because you don't want to fill up your hosts file with the same routes:
+Instead of http://localhost you can set it up as http://osn.loc
+
+Only execute this line once because you don't want to keep appending the same routes to your hosts file:
 ```
 sudo echo "127.0.0.1 ossn.loc www.ossn.loc" >> /etc/hosts
 ```
-Now it is easy to install like this:
+You can view your hosts file by typing ```more /etc/hosts```
+
+### Installing the Servers:
+
+It is easy to install OSSN Dev Docker like this:
 ```
 git clone https://github.com/antzcode/opensource-socialnetwork-devdocker.git ossn.loc
 cd ossn.loc
