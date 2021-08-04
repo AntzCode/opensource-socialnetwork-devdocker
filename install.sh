@@ -13,7 +13,7 @@
 ###################################################################################
 
 # Comment-out the following line to enable the script
-echo "this script is automatically disabled after installation to prevent accidental data loss" && exit
+# echo "this script is automatically disabled after installation to prevent accidental data loss" && exit
 
 # TL;DR
 # INSTRUCTIONS: Read the following code block and then copy/paste it into your bash terminal.
