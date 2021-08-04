@@ -190,7 +190,9 @@ chown -R 33:docker _the_path_you_added_
 
 ### PHP does not copy Directories across Volumes
 
-See Issue #1. Since the ossn_data and www directories are in separate directories, 
+See the [Github Issue #1](https://github.com/AntzCode/opensource-socialnetwork-devdocker/issues/1). 
+
+Since the ossn_data and www directories are in separate directories, 
 they are seen by PHP as being on different volumes. 
 
 There is a known [bug in PHP](https://bugs.php.net/bug.php?id=54097) that means 
