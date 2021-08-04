@@ -1,0 +1,8 @@
+#do not push IDE files
+/.idea
+
+
+#do not ignore config files
+!/.scrutinizer.yml
+!/.travis.yml
+!.gitignore

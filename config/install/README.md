@@ -12,5 +12,5 @@
   ###################################################################################
 -->
 
-# Placeholder
-The database stores its content in this directory - do not alter anything!
+# Install scripts
+These scripts can be altered according to your installation requirements.

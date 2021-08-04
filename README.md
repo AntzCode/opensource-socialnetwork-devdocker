@@ -1,81 +1,197 @@
+<!--
+  ###################################################################################
+  ##    Open Source Social Network - AntzCode DevDocker Automated Installer        ##
+  ##                                                                               ##
+  ##    @package   AntzCode                                                        ##
+  ##    @author    AntzCode Ltd                                                    ##
+  ##    @copyright (C) AntzCode Ltd                                                ##
+  ##    @license   GPLv3 https://raw.githubusercontent.com/AntzCode/               ##
+  ##                         opensource-socialnetwork-devdocker/main/LICENSE       ##
+  ##    @link      https://github.com/AntzCode/opensource-socialnetwork-devdocker  ##
+  ##                                                                               ##
+  ###################################################################################
+-->
 # opensource-socialnetwork-devdocker
 A docker-compose recipe for a LAMP server environment that downloads and runs the 
-[AntzCode fork](https://github.com/antzcode/opensource-socialnetwork) of the [Open Source Social Network](https://github.com/opensource-socialnetwork/opensource-socialnetwork) from Github.
+[AntzCode fork](https://github.com/antzcode/opensource-socialnetwork) 
+of the [Open Source Social Network](https://github.com/opensource-socialnetwork/opensource-socialnetwork) 
+from Github.
 
-## How to Install and Run (Linux/Bash)
+## How to Install and Run
 
-1. Download the project
+It's quite easy to install and run this recipe for [docker-compose](https://docs.docker.com/compose/install/), 
+all you have to do is create an entry in your hosts file, 
+do a GIT clone, 
+chown the files 
+then run the installation script. 
+
+After that you can run OSSN with ```./start.sh``` and stop it with ```./stop.sh```.  
+
+* **Don't forget to check the settings in the ```.env``` file!**
+
+## TL;DR instructions (for Ubuntu/Linux)
+
+Read the following code block and then copy/paste it into your bash terminal. You will be prompted to enter your password up front in order to execute the two elevated commands:
 
 ```
-git clone https://github.com/antzcode/opensource-socialnetwork-devdocker.git
-```
-
-2. Run the install script
-
-```
+sudo echo
+sudo echo "127.0.0.1 ossn.loc www.ossn.loc" >> /etc/hosts
+git clone https://github.com/antzcode/opensource-socialnetwork-devdocker.git ossn.loc
+cd ossn.loc
+rm -rf www database/data/* ossn_data/*
+git clone https://github.com/antzcode/opensource-socialnetwork.git www
+sudo chown -R 33:docker www ossn_data
 ./install.sh
+./start.sh
+```
+To stop the servers:
+
+```
+./stop.sh
 ```
 
-3. Edit the .env file and put in your own strong passwords for the database
+## Detailed Instructions (Linux/Windows/Mac)
 
-```
-MARIADB_ROOT_PASSWORD=(OssnRootPassword)
-MARIADB_PASSWORD=(OssnUserPassword)
-```
+**1. Create an entry in your hosts file for the local domain.** 
 
-4. Create an entry in your hosts file for the local domain
+This enables your browser to find the web server at http://ossn.loc 
+even though it isn't a registered domain name.
 
+#### (Linux/Mac)
 ```
 sudo echo "127.0.0.1 ossn.loc www.ossn.loc" >> /etc/hosts
+# or
+sudo nano /etc/hosts
 ```
 
-5. Bring up the servers
-
-```
-./run.sh
-```
-
-6. Install OSSN through your browser at http://ossn.loc with the database credentials from the .env file:
-
-```
-host: db
-db name: ossn
-user: ossn
-password: OssnUserPassword
-```
-
-7. Create your default OSSN administrator account and then log in
-
-* Every time you want to run the servers, use ./run.sh
-* Every time you want to stop the servers, use ./stop.sh
-* ./install.sh automatically disables itself after installation to prevent data loss. 
-  To Re-enable install.sh, make line 4 a comment by placing the pound symbol ("#") at the start of the line.
-
-
-## How to Install and Run (Windows)
-
-Same as on Linux, except that steps 2, 4 and 5 you need to do manually:
-
-2. Empty the ```ossn_data``` directory, delete the ```www``` directory then download the project files into a new ```www``` directory:
-
-```
-git clone https://github.com/antzcode/opensource-socialnetwork.git www
-```
-
-4. Create an entry in your hosts file for the local domain. Add the following line to the file at *C:/Windows/System32/drivers/etc/hosts*
-
+* make sure the following line is in /etc/hosts
 ```
 127.0.0.1 ossn.loc www.ossn.loc
 ```
 
-5. Bring up the servers
+#### (Windows)
+
+Right-click and "Edit as Administrator" on the hosts file: 
+*C:/Windows/System32/drivers/etc/hosts* 
+and add the following line to it:
+```
+127.0.0.1 ossn.loc www.ossn.loc
+```
+
+**2. Download the project**
+
+This will clone the devdocker project from Github into a folder named ```ossn.loc```. 
+You then need to clear any existing data in the database and checkout the 
+[AntzCode/opensource-socialcommerce](https://github.com/AntzCode/opensource-socialnetwork) project 
+to the www folder:
+
+```
+git clone https://github.com/antzcode/opensource-socialnetwork-devdocker.git ossn.loc
+cd ossn.loc
+rm -rf www database/data/*
+git clone https://github.com/antzcode/opensource-socialnetwork.git www
+```
+
+**3. Make an ossn_data directory in the www directory**
+
+See the **known problems** at the bottom of this file.
+
+```
+mkdir www/ossn_data
+```
+
+**4. Chown the files**
+
+This enables a Linux user to work with the files that the webserver has made. 
+Windows and Mac users might be able to skip this step.
+
+* note: your user must be a member of the docker group, which it probably already is 
+  if you have configured Docker correctly.
+
+```
+sudo chown -R 33:docker ossn_data www
+```
+
+**5. (optional): Edit the .env file and put in your own values**
+
+The ```.env``` file contains default settings for a rapid deployment of the stack.
+
+```
+# eg:
+ADMIN_USERNAME=          (your username)
+ADMIN_PASSWORD=          (your password)
+MARIADB_PASSWORD=        (your password)
+MARIADB_ROOT_PASSWORD=   (your password)
+```
+
+**6. Run the installation script**
+
+#### (For Linux)
+```
+./install.sh
+```
+
+**7. To start the servers**
+
+#### Bash script (Linux/Mac)
+```
+./start.sh
+```
+
+#### Manually (Windows/Linux/Mac)
 
 ```
 docker-compose --env-file=.env up -d
 ```
 
-* To stop the servers: ```docker-compose down```
+**8. To stop the servers**
+
+#### Bash script (Linux/Mac)
+```
+./stop.sh
+```
+
+#### Manually (Windows/Linux/Mac)
+
+```
+docker-compose down
+```
+
+**9. Install OSSN through your browser at http://ossn.loc/installation**
+
+### Notes:
+
+* To run the servers: ```./run.sh```
+* To stop the servers: ```./stop.sh```
+* Default Administrator credentials:
+  * admin
+  * password
+  * admin@ossn.loc
+* ```./install.sh``` automatically disables itself after installation to prevent data loss. 
+  To Re-enable install.sh, make line 4 a comment by placing a # (the pound symbol) at the start of the line.
 
 ## Known Problems
 
-* The permissions of all webserver files (www and ossn_data directories) are publicly accessible (777)
+### Linux File Permissions
+
+Linux has strict handling of file ownership and permissions of all webserver files. 
+When the user is logged in to an account on the host computer, that is a different user than 
+the user that is running the server in the Docker container. 
+
+This means that all files in www and ossn_data directories should be owned by www-data or 33 (that is the username/id of
+the web server user on the Docker container) and the files should have at least 755 permissions. If you add any
+files to the /www directory, you should chown them: ```chown -R 33:docker _the_path_you_added_```
+
+### PHP does not copy Directories across Volumes
+
+Since the ossn_data and www directories are in separate directories, 
+they are seen by PHP as being on different volumes. 
+
+There is a known [bug in PHP](https://bugs.php.net/bug.php?id=54097) that means 
+the ```rename``` function doesn't copy directories from one volume to another. 
+OSSN is presently relying on PHP's ```rename``` function to copy uploaded themes and components 
+from the ```ossn_data/tmp``` directory to the ```www/components``` directory.
+
+This results in failed uploads of components and themes. For this reason, the ossn_data directory
+is configured as a subdirectory of www, which is ok for a development server but 
+**this configuration should not be used on a production server**.

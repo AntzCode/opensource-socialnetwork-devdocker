@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ###################################################################################
 ##    Open Source Social Network - AntzCode DevDocker Automated Installer        ##
 ##                                                                               ##
@@ -10,25 +12,4 @@
 ##                                                                               ##
 ###################################################################################
 
-version: "3.7"
-services:
-  app:
-    image: antzcode/apache-php-ubuntu:apache2-php7.4-focal
-    ports:
-      - 80:80
-    volumes:
-      - ./config/sites-enabled:/etc/apache2/sites-enabled
-      - ./config/php.ini:/etc/php/7.4/apache2/php.ini
-      - ./config/envvars:/etc/apache2/envvars
-      - ./logs:/var/www/logs
-      - ./ossn_data:/var/www/ossn_data
-      - ./www:/var/www/html
-  db:
-    image: antzcode/mariadb-ubuntu:mariadb10.6-focal
-    env_file: 
-      - .env
-    ports:
-      - 3306:3306
-    volumes:
-      - ./database/data:/var/lib/mysql
-      - ./database/files:/var/lib/mysql-files
+docker-compose --env-file=.env up -d
