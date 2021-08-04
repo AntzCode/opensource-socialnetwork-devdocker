@@ -19,7 +19,7 @@ from Github.
 
 ## How to Install and Run
 
-It's quite easy to install and run this recipe for [docker-compose](https://docs.docker.com/compose/install/). 
+It's quite easy to install and run this [docker-compose](https://docs.docker.com/compose/install/) recipe. 
 
 All you have to do is GIT clone, run the installation script, and chown the files. 
 
