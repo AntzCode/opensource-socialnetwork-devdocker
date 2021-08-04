@@ -1,8 +1,17 @@
-#do not push IDE files
+# do not push IDE files
 /.idea
 
+# do not push passwords
+/.env
 
-#do not ignore config files
+# do not push server data
+/logs/*
+/www/*
+/ossn_data/*
+/database/files/*
+/database/data/*
+
+# do not ignore config files
 !/.scrutinizer.yml
 !/.travis.yml
 !.gitignore
