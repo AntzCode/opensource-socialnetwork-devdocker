@@ -35,6 +35,8 @@ Read the following code block and then copy/paste it into your bash terminal. Yo
 
 ```
 sudo echo
+```
+```
 sudo echo "127.0.0.1 ossn.loc www.ossn.loc" >> /etc/hosts
 git clone https://github.com/antzcode/opensource-socialnetwork-devdocker.git ossn.loc
 cd ossn.loc
