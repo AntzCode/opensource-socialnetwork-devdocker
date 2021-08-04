@@ -31,21 +31,24 @@ After that you can run OSSN with ```./start.sh``` and stop it with ```./stop.sh`
 
 ## TL;DR instructions (for Ubuntu/Linux)
 
-Read the following code block and then copy/paste it into your bash terminal. You will be prompted to enter your password up front in order to execute the two elevated commands:
+Optional: instead of http://localhost you can set it up as http://osn.loc
 
-```
-sudo echo
-```
+Only do this once because you don't want to fill up your hosts file with the same routes:
 ```
 sudo echo "127.0.0.1 ossn.loc www.ossn.loc" >> /etc/hosts
+```
+Now it is easy to install like this:
+```
 git clone https://github.com/antzcode/opensource-socialnetwork-devdocker.git ossn.loc
 cd ossn.loc
-rm -rf www database/data/* ossn_data/*
-git clone https://github.com/antzcode/opensource-socialnetwork.git www
-sudo chown -R 33:docker www ossn_data
 ./install.sh
+sudo chown -R 33:docker www ossn_data
+```
+To start the servers:
+```
 ./start.sh
 ```
+
 To stop the servers:
 
 ```
@@ -94,15 +97,7 @@ rm -rf www database/data/*
 git clone https://github.com/antzcode/opensource-socialnetwork.git www
 ```
 
-**3. Make an ossn_data directory in the www directory**
-
-See the **known problems** at the bottom of this file.
-
-```
-mkdir www/ossn_data
-```
-
-**4. Chown the files**
+**3. Chown the files**
 
 This enables a Linux user to work with the files that the webserver has made. 
 Windows and Mac users might be able to skip this step.
@@ -114,10 +109,10 @@ Windows and Mac users might be able to skip this step.
 sudo chown -R 33:docker ossn_data www
 ```
 
-**5. (optional): Edit the .env file and put in your own values**
+**4. (optional): Edit the .env file and put in your own values**
 
 The ```.env``` file contains default settings for a rapid deployment of the stack.
-
+You will need to create the ```.env``` file by copy and rename of the ```.env.sample``` file.
 ```
 # eg:
 ADMIN_USERNAME=          (your username)
@@ -126,14 +121,14 @@ MARIADB_PASSWORD=        (your password)
 MARIADB_ROOT_PASSWORD=   (your password)
 ```
 
-**6. Run the installation script**
+**5. Run the installation script**
 
 #### (For Linux)
 ```
 ./install.sh
 ```
 
-**7. To start the servers**
+**6. To start the servers**
 
 #### Bash script (Linux/Mac)
 ```
@@ -146,7 +141,7 @@ MARIADB_ROOT_PASSWORD=   (your password)
 docker-compose --env-file=.env up -d
 ```
 
-**8. To stop the servers**
+**7. To stop the servers**
 
 #### Bash script (Linux/Mac)
 ```
@@ -159,7 +154,7 @@ docker-compose --env-file=.env up -d
 docker-compose down
 ```
 
-**9. Install OSSN through your browser at http://ossn.loc/installation**
+**8. Install OSSN through your browser at http://ossn.loc/installation**
 
 ### Notes:
 
@@ -170,7 +165,7 @@ docker-compose down
   * password
   * admin@ossn.loc
 * ```./install.sh``` automatically disables itself after installation to prevent data loss. 
-  To Re-enable install.sh, make line 4 a comment by placing a # (the pound symbol) at the start of the line.
+  To Re-enable install.sh, make line 16 a comment by placing a # (the pound symbol) at the start of the line.
 
 ## Known Problems
 
@@ -181,12 +176,17 @@ When the user is logged in to an account on the host computer, that is a differe
 the user that is running the server in the Docker container. 
 
 This means that all files in www and ossn_data directories should be owned by www-data or 33 (that is the username/id of
-the web server user on the Docker container) and the files should have at least 755 permissions. If you add any
-files to the /www directory, you should chown them: ```chown -R 33:docker _the_path_you_added_```
+the web server user on the Docker container) and the files should have at least 755 permissions. 
+
+If you add any files to the /www directory, you should chown them: 
+
+```
+chown -R 33:docker _the_path_you_added_
+```
 
 ### PHP does not copy Directories across Volumes
 
-Since the ossn_data and www directories are in separate directories, 
+See Issue #1. Since the ossn_data and www directories are in separate directories, 
 they are seen by PHP as being on different volumes. 
 
 There is a known [bug in PHP](https://bugs.php.net/bug.php?id=54097) that means 
