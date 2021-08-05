@@ -49,7 +49,7 @@ To stop the servers:
 
 * Note: this is done automatically if you use the ```-a``` flag with ```./install.sh```
 
-Instead of http://localhost you can set it up as http://osn.loc
+Instead of http://localhost you can set it up as http://ossn.loc
 
 Only execute this line once because you don't want to keep appending the same routes to your hosts file:
 ```
