@@ -153,7 +153,7 @@ while getopts ":vhVacmu:" option; do
 			;;
 		\?) # Invalid option
 			echo "Error: Invalid option"
-			exit;;
+			exit 1;;
 	esac
 done
 
