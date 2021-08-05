@@ -168,7 +168,7 @@ if [ "$requiresElevatedPrivileges" == "true" ]; then
 		# has already logged in with sudo
 		hasSudo=true
 	else
-		echo 'Will not proceed while having insufficient privileges. Try to remove the flags.'
+		echo 'Will not proceed while having insufficient privileges. Try to remove the flags :)'
 		exit 1
 	fi
 fi
