@@ -23,6 +23,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/system/start.php');
                 background: #01042e url(<?php echo ossn_installation_paths()->url; ?>styles/antzcode-background.svg);
                 background-repeat: no-repeat; background-size: contain; background-position: center;
             }
+            .loading-overlay{position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020407; animation: fadeInOverlay 1.2s; opacity: 0.4; }
             .ossn-installation-message{text-align: left;}
             .layout-installation{border: none; background: none; font-size: 1.2em;}
             #antzcode-logo{text-align: center;}
@@ -41,6 +42,8 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/system/start.php');
                 top: -1px;
                 box-shadow: 1px 1px 25px 0px rgba(13, 130, 255, 0.42);
             }
+            a.submit-button.submitted{background-color: #384160;}
+            @keyframes fadeInOverlay{0% {opacity:0;} 100% {opacity: 0.4;}}
             @keyframes fadeIn{0% {opacity: 0;} 100% {opacity: 1;}}
             @keyframes fadeOut{0% {opacity: 1;} 100% {opacity: 0;}}
             .fade-out{animation: fadeOut 1.2s; }
@@ -57,7 +60,7 @@ Password: :|ADMIN_PASSWORD|:
 </pre>
         <p>You should change your password if you think other people might be able to log in with it.</p>
         <p>You will now be redirected to the login form. Have fun!</p>
-        <a href="<?php echo ossn_installation_paths()->url ?>?action=finish" class="submit-button">Continue</a>
+        <a href="<?php echo ossn_installation_paths()->url ?>?action=finish" class="submit-button" onclick="show_loading_overlay()">Continue</a>
 
         <script type="text/javascript">
             var installNotice = document.getElementsByClassName('ossn-installation-message')[0];
@@ -78,6 +81,20 @@ Password: :|ADMIN_PASSWORD|:
                     installNotice.style.opacity = '0';
                 }, 1190);
             }, 2200);
+            function show_loading_overlay(){
+                var overlayEl = document.createElement('div');
+                overlayEl.classList.add('loading-overlay');
+                document.body.appendChild(overlayEl);
+                document.getElementsByClassName('submit-button')[0].classList.add('submitted');
+                setTimeout(() => {
+                    hide_loading_overlay();
+                }, 8000);
+            }
+            function hide_loading_overlay(){
+                document.getElementsByClassName('submit-button')[0].classList.remove('submitted');
+                var overlayEl = document.getElementsByClassName('loading-overlay')[0];
+                overlayEl.parentNode.removeChild(overlayEl);
+            }
         </script>
     </div>
 </div>
