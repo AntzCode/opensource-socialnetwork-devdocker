@@ -44,27 +44,27 @@ Help()
 {
 	# Display Help
 	echo " ## "
-	echo " ##  Installs Open Source Social Network on the AntzCode DevDocker."
+	echo " ##  Installs Open Source Social Network on the AntzCode DevDocker.    "
 	echo " ## "
-	echo " ##       Syntax: ./install.sh [-h|v|V|a|c|m|u]"
+	echo " ##       Syntax: ./install.sh [-h|v|V|a|c|m|u]    "
 	echo " ## "
 	echo " ##       Example:     ./install.sh -av    "
 	echo " ## "
 	echo " ##       Options:"
 	echo " ## "
 	echo " ##   h   Print this Help.    "
-  echo " ##   v   Verbose mode.    "
-  echo " ##   V   Print software version.    "
+	echo " ##   v   Verbose mode.    "
+	echo " ##   V   Print software version.    "
 	echo " ##   a   Automatic installation. * (requires elevated privileges)"
 	echo " ##        - Adds entries to the hosts file if not already exists"
-	echo " ##          and chowns the files."
+	echo " ##          and chowns the files.    "
 	echo " ##        - Is not the inverse of -m    "
 	echo " ##   c   Chown the files.        * (requires elevated privileges)    "
 	echo " ##   m   Manual setup.    "
 	echo " ##        - Does not install the Automated Installer but instead"
-  echo " ##          keeps OSSN's default two-step setup forms.    "
-	echo " ##   u   URL to the repository."
-	echo " ##        - Default: $GIT_PROJECT_URL"
+	echo " ##          keeps OSSN's default two-step setup forms.    "
+	echo " ##   u   URL to the repository.    "
+	echo " ##        - Default: $GIT_PROJECT_URL    "
 	echo " ##        - Some options might not work with other repositories.    "
 	echo " ## "
 }
@@ -73,6 +73,7 @@ Help()
 ############################################################
 # Print Verbose output
 ############################################################
+
 log()
 {
 	if [ "$1" == "v" ]; then
@@ -86,7 +87,7 @@ log()
 ############################################################
 ############################################################
 ###                                                      ###
-###               Main program begins                    ###
+###                 Main program begins                  ###
 ###                                                      ###
 ############################################################
 ############################################################
@@ -119,41 +120,41 @@ requiresElevatedPrivileges=false
 
 # Get the options
 while getopts ":vhVacmu:" option; do
-   case $option in
-      v) # verbose output
-         doVerbose=true
-         ;;
-      h) # display Help
-         Help
-         exit;;
-      V) # display software version
-         echo "AntzCode OSSN Dev Docker Installer v1.0 - 2021"
-         exit;;
-      a) # automatic
-         doAuto=true
-         doHosts=true
-         doChown=true
-         requiresElevatedPrivileges=true
-         echo -n "You have chosen the automatic installation. "
-         ;;
-      c) # do the chown
-         if [ "$doAuto" == "false" ]; then
-	         doChown=true
-		 requiresElevatedPrivileges=true
-		 echo -n "You have chosen to chown the files. "
-         fi
-         ;;
-      m) # manual setup process
-         doManual=true
-         log v "Manual setup process (using the default OSSN configuration forms)"
-         ;;
-      u) # enable a custom GIT url
-         GIT_PROJECT_URL=$OPTARG
-         ;;
-      \?) # Invalid option
-         echo "Error: Invalid option"
-         exit;;
-   esac
+	case $option in
+		v) # verbose output
+			doVerbose=true
+			;;
+		h) # display Help
+			Help
+			exit;;
+		V) # display software version
+			echo "AntzCode OSSN Dev Docker Installer v1.0 - 2021"
+			exit;;
+		a) # automatic
+			doAuto=true
+			 doHosts=true
+			 doChown=true
+			 requiresElevatedPrivileges=true
+			 echo -n "You have chosen the automatic installation. "
+			 ;;
+		c) # do the chown
+			if [ "$doAuto" == "false" ]; then
+				doChown=true
+				requiresElevatedPrivileges=true
+				echo -n "You have chosen to chown the files. "
+			fi
+			;;
+		m) # manual setup process
+			doManual=true
+			log v "Manual setup process (using the default OSSN configuration forms)"
+			;;
+		u) # enable a custom GIT url
+			GIT_PROJECT_URL=$OPTARG
+			;;
+		\?) # Invalid option
+			echo "Error: Invalid option"
+			exit;;
+	esac
 done
 
 
@@ -186,7 +187,7 @@ if [ "$doHosts" == "true" ]; then
 		echo "## AntzCode/opensource-socialnetwork-devdocker end " | sudo tee -a "$HOSTS_FILE" > /dev/null
 	else
 		log v "There is already an entry for $HOSTS_DOMAIN in $HOSTS_FILE, so no changes were made to it."
-	fi 
+	fi
 fi
 
 
@@ -213,7 +214,7 @@ if [ ! -f ./www/installation ]; then
 	log v "www/installation directory does not exist, therefore the project will be downloaded."
 	log v "deleting the www directory..."
 
-	if [ "$hasSudo" == "true" ]; then 
+	if [ "$hasSudo" == "true" ]; then
 		sudo rm -rf www
 	else
 		rm -rf www
@@ -254,7 +255,7 @@ fi
 ############################################################
 
 if [ "$doManual" == "false" ]; then
-	
+
 	log v "Configuring AntzCode automated installer..."
 
 	# install the AntzCode automated installer scripts
