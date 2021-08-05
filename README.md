@@ -15,7 +15,7 @@
 A docker-compose recipe for a LAMP server environment that downloads and runs the 
 [AntzCode fork](https://github.com/antzcode/opensource-socialnetwork) 
 of the [Open Source Social Network](https://github.com/opensource-socialnetwork/opensource-socialnetwork) 
-from Github.
+from Github. Works with Linux, Windows and Mac!
 
 ## How to Install and Run
 
@@ -27,26 +27,12 @@ After that you can run OSSN with ```./start.sh``` and stop it with ```./stop.sh`
 
 * **Don't forget to check the settings in the ```.env``` file!**
 
-## TL;DR instructions (for Ubuntu/Linux)
+### TL;DR instructions (for Ubuntu/Linux)
 
-### Optional prerequisite: 
-
-Instead of http://localhost you can set it up as http://osn.loc
-
-Only execute this line once because you don't want to keep appending the same routes to your hosts file:
-```
-sudo echo "127.0.0.1 ossn.loc www.ossn.loc" >> /etc/hosts
-```
-You can view your hosts file by typing ```more /etc/hosts```
-
-### Installing the Servers:
-
-It is easy to install OSSN Dev Docker like this:
 ```
 git clone https://github.com/antzcode/opensource-socialnetwork-devdocker.git ossn.loc
 cd ossn.loc
-./install.sh
-sudo chown -R 33:docker www ossn_data
+./install.sh -a
 ```
 To start the servers:
 ```
@@ -58,6 +44,18 @@ To stop the servers:
 ```
 ./stop.sh
 ```
+
+### Optional prerequisite: 
+
+* Note: this is done automatically if you use the ```-a``` flag with ```./install.sh```
+
+Instead of http://localhost you can set it up as http://osn.loc
+
+Only execute this line once because you don't want to keep appending the same routes to your hosts file:
+```
+sudo echo "127.0.0.1 ossn.loc www.ossn.loc" >> /etc/hosts
+```
+You can view your hosts file by typing ```more /etc/hosts```
 
 ## Detailed Instructions (Linux/Windows/Mac)
 
@@ -192,7 +190,7 @@ chown -R 33:docker _the_path_you_added_
 
 See the [Github Issue #1](https://github.com/AntzCode/opensource-socialnetwork-devdocker/issues/1). 
 
-Since the ossn_data and www directories are in separate directories, 
+Since the ossn_data and www directories are mounted separately in docker, 
 they are seen by PHP as being on different volumes. 
 
 There is a known [bug in PHP](https://bugs.php.net/bug.php?id=54097) that means 
@@ -200,6 +198,4 @@ the ```rename``` function doesn't copy directories from one volume to another.
 OSSN is presently relying on PHP's ```rename``` function to copy uploaded themes and components 
 from the ```ossn_data/tmp``` directory to the ```www/components``` directory.
 
-This results in failed uploads of components and themes. For this reason, the ossn_data directory
-is configured as a subdirectory of www, which is ok for a development server but 
-**this configuration should not be used on a production server**.
+**This results in failed uploads of components and themes.**
