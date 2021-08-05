@@ -259,7 +259,7 @@ if [ "$doManual" == "false" ]; then
 
 	# install the AntzCode automated installer scripts
 	cd config/install
-	source ./run.1.auto-install.sh
+	source ./install-automated-installer.sh
 
 	# finished running install scripts
 	cd ../..

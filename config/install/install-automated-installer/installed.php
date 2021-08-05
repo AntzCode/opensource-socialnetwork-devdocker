@@ -23,7 +23,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/system/start.php');
                 background: #01042e url(<?php echo ossn_installation_paths()->url; ?>styles/antzcode-background.svg);
                 background-repeat: no-repeat; background-size: contain; background-position: center;
             }
-            .loading-overlay{position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020407; animation: fadeInOverlay 1.2s; opacity: 0.4; }
+            .loading-overlay{position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020407; animation: fadeInOverlay 3.5s; opacity: 1; }
             .ossn-installation-message{text-align: left;}
             .layout-installation{border: none; background: none; font-size: 1.2em;}
             #antzcode-logo{text-align: center;}
@@ -43,7 +43,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/system/start.php');
                 box-shadow: 1px 1px 25px 0px rgba(13, 130, 255, 0.42);
             }
             a.submit-button.submitted{background-color: #384160;}
-            @keyframes fadeInOverlay{0% {opacity:0;} 100% {opacity: 0.4;}}
+            @keyframes fadeInOverlay{0% {opacity:0;} 100% {opacity: 1;}}
             @keyframes fadeIn{0% {opacity: 0;} 100% {opacity: 1;}}
             @keyframes fadeOut{0% {opacity: 1;} 100% {opacity: 0;}}
             .fade-out{animation: fadeOut 1.2s; }

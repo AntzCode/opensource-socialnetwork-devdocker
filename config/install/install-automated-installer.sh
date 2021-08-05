@@ -34,9 +34,9 @@ VARS=(MARIADB_DATABASE MARIADB_PASSWORD MARIADB_USER MARIADB_HOST WEBSITE_NAME C
 ADMIN_FIRSTNAME ADMIN_LASTNAME ADMIN_EMAIL ADMIN_USERNAME ADMIN_PASSWORD ADMIN_BIRTH_DAY ADMIN_BIRTH_MONTH ADMIN_BIRTH_YEAR ADMIN_GENDER)
 
 log v "Compiling settings from .env into the Automated Installation Template files..."
-SETTINGS_FILE_CONTENTS=$(cat ./1.auto-install/settings.php)
-ACCOUNT_FILE_CONTENTS=$(cat ./1.auto-install/account.php)
-INSTALLED_FILE_CONTENTS=$(cat ./1.auto-install/installed.php)
+SETTINGS_FILE_CONTENTS=$(cat ./install-automated-installer/settings.php)
+ACCOUNT_FILE_CONTENTS=$(cat ./install-automated-installer/account.php)
+INSTALLED_FILE_CONTENTS=$(cat ./install-automated-installer/installed.php)
 
 for i in "${VARS[@]}"
 do
@@ -46,9 +46,9 @@ do
 done
 
 # write the compiled files
-echo "$SETTINGS_FILE_CONTENTS" > ./1.auto-install/settings-compiled.php
-echo "$ACCOUNT_FILE_CONTENTS" > ./1.auto-install/account-compiled.php
-echo "$INSTALLED_FILE_CONTENTS" > ./1.auto-install/installed-compiled.php
+echo "$SETTINGS_FILE_CONTENTS" > ./install-automated-installer/settings-compiled.php
+echo "$ACCOUNT_FILE_CONTENTS" > ./install-automated-installer/account-compiled.php
+echo "$INSTALLED_FILE_CONTENTS" > ./install-automated-installer/installed-compiled.php
 
 # create backup of original OSSN files before we replace them
 log v "Creating backups of the default OSSN installation template files..."
@@ -58,17 +58,17 @@ mv ../../www/installation/pages/installed.php ../../www/installation/pages/insta
 
 # replace the original install pages with the auto-submitting forms
 log v "Replacing the OSSN installation templates with the compiled Automated Installer templates..."
-cp ./1.auto-install/settings-compiled.php ../../www/installation/pages/settings.php
-cp ./1.auto-install/account-compiled.php ../../www/installation/pages/account.php
-cp ./1.auto-install/installed-compiled.php ../../www/installation/pages/installed.php
+cp ./install-automated-installer/settings-compiled.php ../../www/installation/pages/settings.php
+cp ./install-automated-installer/account-compiled.php ../../www/installation/pages/account.php
+cp ./install-automated-installer/installed-compiled.php ../../www/installation/pages/installed.php
 
 # copy the logo files to OSSN installer directory
-cp ./1.auto-install/logo.svg ../../www/installation/styles/antzcode-logo.svg
-cp ./1.auto-install/background.svg ../../www/installation/styles/antzcode-background.svg
+cp ./install-automated-installer/logo.svg ../../www/installation/styles/antzcode-logo.svg
+cp ./install-automated-installer/background.svg ../../www/installation/styles/antzcode-background.svg
 
 # cleanup temp files
 log v "Removing temporary files..."
-rm ./1.auto-install/settings-compiled.php
-rm ./1.auto-install/account-compiled.php
-rm ./1.auto-install/installed-compiled.php
+rm ./install-automated-installer/settings-compiled.php
+rm ./install-automated-installer/account-compiled.php
+rm ./install-automated-installer/installed-compiled.php
 
