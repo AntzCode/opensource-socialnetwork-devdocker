@@ -149,7 +149,7 @@ while getopts ":vhVacmu:" option; do
          ;;
       u) # enable a custom GIT url
          GIT_PROJECT_URL=$OPTARG
-         exit;;
+         ;;
       \?) # Invalid option
          echo "Error: Invalid option"
          exit;;
