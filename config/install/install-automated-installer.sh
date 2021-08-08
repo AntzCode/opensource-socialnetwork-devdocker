@@ -61,6 +61,7 @@ log v "Replacing the OSSN installation templates with the compiled Automated Ins
 cp ./install-automated-installer/settings-compiled.php ../../www/installation/pages/settings.php
 cp ./install-automated-installer/account-compiled.php ../../www/installation/pages/account.php
 cp ./install-automated-installer/installed-compiled.php ../../www/installation/pages/installed.php
+cp ./install-automated-installer/cleanup.php ../../www/installation/pages/cleanup.php
 
 # copy the logo files to OSSN installer directory
 cp ./install-automated-installer/logo.svg ../../www/installation/styles/antzcode-logo.svg

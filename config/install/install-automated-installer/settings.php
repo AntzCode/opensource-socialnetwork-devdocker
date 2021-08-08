@@ -22,6 +22,7 @@
         background-repeat: no-repeat; background-size: contain; background-position: center; position: relative;
     }
     .submit-btn{display: none; }
+    .ossn-installation-message-marg{text-align: left; color: darkred;}
     #progress{position: absolute; top: 18%; width: 100%;}
     #progress.fadeIn{animation: fadeIn 1.2s;}
     #stage{display: none;}#stage.fadeIn{display: block;}

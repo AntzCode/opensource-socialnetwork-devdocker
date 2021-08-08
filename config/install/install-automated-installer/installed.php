@@ -12,6 +12,10 @@
 <?php
 define('OSSN_ALLOW_SYSTEM_START', TRUE);
 require_once(dirname(dirname(dirname(__FILE__))) . '/system/start.php');
+if(array_key_exists('do_cleanup', $_GET) && $_GET['do_cleanup'] === '1'){
+    require(dirname(__FILE__).DIRECTORY_SEPARATOR.'cleanup.php');
+    exit('1');
+}
 ?>
 <div>
     <div class="layout-installation">
@@ -24,7 +28,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/system/start.php');
                 background-repeat: no-repeat; background-size: contain; background-position: center;
             }
             .loading-overlay{position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020407; animation: fadeInOverlay 3.5s; opacity: 1; }
-            .ossn-installation-message{text-align: left;}
+            .ossn-installation-message-marg{text-align: left; color: darkred;}
             .layout-installation{border: none; background: none; font-size: 1.2em;}
             #antzcode-logo{text-align: center;}
             .credentials{
@@ -60,7 +64,7 @@ Password: :|ADMIN_PASSWORD|:
 </pre>
         <p>You should change your password if you think other people might be able to log in with it.</p>
         <p>You will now be redirected to the login form. Have fun!</p>
-        <a href="<?php echo ossn_installation_paths()->url ?>?action=finish" class="submit-button" onclick="show_loading_overlay()">Continue</a>
+        <a href="<?php echo ossn_installation_paths()->url ?>?action=finish" class="submit-button" onclick="return finish_installation(this)">Continue</a>
 
         <script type="text/javascript">
             var installNotice = document.getElementsByClassName('ossn-installation-message')[0];
@@ -81,6 +85,25 @@ Password: :|ADMIN_PASSWORD|:
                     installNotice.style.opacity = '0';
                 }, 1190);
             }, 2200);
+            function finish_installation(a){
+                show_loading_overlay();
+                var req = new XMLHttpRequest();
+                req.onreadystatechange = function(){
+                    if(this.readyState == 4){
+                        if (req.status != 200 && req.status != 304) {
+                            // there was an error - cleanup did not complete
+                            hide_loading_overlay();
+                            alert('there was an error');
+                            return;
+                        }else{
+                            window.location.href=a.href;
+                        }
+                    }
+                }
+                req.open('GET', '<?php echo ossn_installation_paths()->url; ?>?page=installed&do_cleanup=1', true);
+                req.send();
+                return false;
+            }
             function show_loading_overlay(){
                 var overlayEl = document.createElement('div');
                 overlayEl.classList.add('loading-overlay');
